@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เมนูดิจิทัล - ครัวเล็กเล็ก</title>
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --white: #FFFFFF;
+            --accent: #ff4500; 
+            --danger: #d9534f;
+            --info: #3498db;
+        }
+        
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #222 0%, #000 100%);
+            font-family: 'Kanit', sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            height: 12vh;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 5px solid var(--gold);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            z-index: 100;
+            position: relative;
+        }
+        .logo { height: 8vh; margin-right: 15px; }
+        .shop-name { font-size: 5.5vh; font-weight: 600; color: #1a1a1a; margin: 0; }
+        .shop-name span { color: var(--gold); }
+
+        .header-right {
+            position: absolute;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .info-badge {
+            background: var(--info);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 1.8vh;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.2;
+        }
+
+        .holiday-badge {
+            background: var(--danger);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 8px;
+            font-size: 2vh;
+            font-weight: 500;
+        }
+
+        #digital-clock {
+            color: #1a1a1a;
+            font-size: 3.5vh;
+            font-weight: 600;
+            background: #f0f0f0;
+            padding: 5px 20px;
+            border-radius: 12px;
+            border: 2px solid var(--gold);
+        }
+
+        #display-area {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .menu-card {
+            height: 75vh;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 20px;
+            position: relative;
+            background: #1a1a1a;
+            border: 2px solid rgba(214, 175, 55, 0.4);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+        }
+
+        .special-card {
+            border: 3px solid var(--gold);
+        }
+
+        .thanks-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+            padding: 80px 20px 40px 20px;
+            color: white;
+            text-align: center;
+            z-index: 30;
+        }
+
+        .thanks-text {
+            font-size: 4.8vh;
+            font-weight: 600;
+            text-shadow: 2px 2px 5px rgba(0,0,0,1), 0 0 25px rgba(212, 175, 55, 0.4);
+            line-height: 1.5;
+            animation: slideUp 1s ease-out forwards;
+        }
+
+        .thanks-text span { 
+            color: var(--gold); 
+            font-size: 5.8vh;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        }
+
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-size: 2.8vh;
+            font-weight: bold;
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .menu-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            animation: kenburns 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes kenburns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: linear-gradient(90deg, var(--gold), #f3d060, var(--gold));
+            color: #000;
+            height: 4.5vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .ticker-move {
+            white-space: nowrap;
+            animation: ticker 40s linear infinite;
+            font-weight: 500;
+            font-size: 2.4vh;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .footer {
+            height: 6vh;
+            background: #000;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .footer-text { font-size: 2.8vh; }
+        .footer-text b { color: var(--gold); }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="header">
+        <img src="https://img1.pic.in.th/images/463db0d541fac072645010af74c29e67.jpg" class="logo">
+        <h1 class="shop-name">ครัว<span>เล็กเล็ก</span></h1>
+        
+        <div class="header-right">
+            <div class="info-badge">
+                <span>เปิดบริการ</span>
+                <strong>11:00 - 20:00</strong>
+            </div>
+            <div class="holiday-badge">❌ หยุดทุกวันพุธ</div>
+            <div id="digital-clock">00:00:00</div>
+        </div>
+    </div>
+
+    <div id="display-area"></div>
+
+    <div class="ticker-wrap">
+        <div class="ticker-move">
+             ✨ วัตถุดิบสดใหม่ ใส่ใจทุกจาน ✨ <span style="color: #d00; font-weight: bold;">ร้านหยุดทุกวันพุธ</span> ✨ สำรองที่นั่งโทร 091-2398627 ✨ เมนูแนะนำวันนี้: กุ้งแม่น้ำคั่วพริกเกลือ, ไข่ตุ๋นทะเลหม้อไฟ, ปลากะพงทอดน้ำปลา ✨
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-text">จองโต๊ะ โทร: <b>091-2398627</b></div>
+        <div style="font-size: 2.4vh;">🔵 FB: ครัวเล็กเล็ก</div>
+    </div>
+
+    <script>
+        const menuImages = [
+            "https://img2.pic.in.th/518944471_1262665762536791_3034687933413591951_n.jpg",
+            "https://img1.pic.in.th/images/523122580_1267689408701093_2736552579555197975_n.jpg",
+            "https://img2.pic.in.th/539450511_1295918935878140_4887361505576851086_n.jpg",
+            "https://img1.pic.in.th/images/548195611_1313022794167754_2091179585666618733_n.jpg",
+            "https://img1.pic.in.th/images/557596134_1328892295914137_5448378800222139297_n.jpg",
+            "https://img2.pic.in.th/571126216_1352903190179714_3781199523474770985_n.jpg",
+            "https://img1.pic.in.th/images/572421432_1356367263166640_4447074837102631416_n.jpg",
+            "https://img2.pic.in.th/575123464_1359944166142283_9195548062733492126_n.jpg"
+            // เพิ่มรูปอาหารที่นี่จนครบ 34 อย่าง
+        ];
+
+        // จัดกลุ่มรูปศิลปินเป็นชุดๆ
+        const celebritySets = [
+            {
+                images: ["https://img2.pic.in.th/620007072_1425761852893847_7638332805859317431_n.jpg"],
+                text: 'ขอขอบพระคุณ <span>คุณฮาย อาภาพร นครสวรรค์</span> และทีมงาน<br>ที่เลือก "ครัวเล็กเล็ก" ได้ให้บริการอาหารเย็นก่อนไปงาน ✨'
+            },
+            {
+                images: [
+                    "https://img1.pic.in.th/images/620157233_1427323096071056_1583158199202492255_n.jpg",
+                    "https://img2.pic.in.th/618860533_1427319429404756_8788729712307805789_n.jpg"
+                ],
+                text: 'ขอขอบพระคุณ <span>คุณปุ้ย วง L.กฮ. และทีมงาน</span><br>ที่เลือกให้ "ครัวเล็กเล็ก" ได้ให้บริการอาหารมื้อพิเศษ ✨'
+            }
+        ];
+
+        let menuIdx = 0;
+        let celebIdx = 0;
+        let isShowCeleb = true; 
+        let timeoutHandle;
+        const badges = ["เมนูแนะนำ ✨", "ต้องลอง! 🔥", "ขายดีที่สุด 👍", "อร่อยคอนเฟิร์ม! ❤️"];
+
+        function updateDisplay() {
+            const area = document.getElementById('display-area');
+            area.innerHTML = '';
+            let displayTime = 10000;
+
+            if (isShowCeleb) {
+                // แสดงรูปศิลปินทีละชุด
+                const currentCeleb = celebritySets[celebIdx];
+                displayTime = 15000;
+
+                currentCeleb.images.forEach(src => {
+                    const card = document.createElement('div');
+                    card.className = 'menu-card special-card fade-in';
+                    const img = document.createElement('img');
+                    img.className = 'menu-img';
+                    img.src = src;
+                    card.appendChild(img);
+                    area.appendChild(card);
+                });
+
+                const overlay = document.createElement('div');
+                overlay.className = 'thanks-overlay';
+                overlay.innerHTML = `<div class="thanks-text">${currentCeleb.text}</div>`;
+                area.appendChild(overlay);
+
+                celebIdx++;
+                // ถ้าแสดงศิลปินครบทุกชุดแล้ว ต่อไปให้โชว์อาหาร
+                if (celebIdx >= celebritySets.length) {
+                    celebIdx = 0;
+                    isShowCeleb = false;
+                }
+            } else {
+                // แสดงรูปอาหารทีละ 2 รูป
+                displayTime = 10000;
+                for (let i = 0; i < 2; i++) {
+                    if (menuIdx < menuImages.length) {
+                        const card = document.createElement('div');
+                        card.className = 'menu-card fade-in';
+                        
+                        if (Math.random() > 0.6) {
+                            const b = document.createElement('div');
+                            b.className = 'badge';
+                            b.innerText = badges[Math.floor(Math.random() * badges.length)];
+                            card.appendChild(b);
+                        }
+
+                        const img = document.createElement('img');
+                        img.className = 'menu-img';
+                        img.src = menuImages[menuIdx];
+                        card.appendChild(img);
+                        area.appendChild(card);
+                        menuIdx++;
+                    }
+                }
+
+                // ถ้าโชว์รูปอาหารครบ 34 อย่างแล้ว ให้กลับไปโชว์ศิลปินใหม่
+                if (menuIdx >= menuImages.length) {
+                    menuIdx = 0;
+                    isShowCeleb = true;
+                }
+            }
+
+            clearTimeout(timeoutHandle);
+            timeoutHandle = setTimeout(updateDisplay, displayTime);
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('th-TH', { hour12: false });
+            document.getElementById('digital-clock').innerText = timeStr;
+        }
+
+        updateDisplay();
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
