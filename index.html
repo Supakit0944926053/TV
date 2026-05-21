@@ -11,6 +11,7 @@
             --accent: #ff4500; 
             --danger: #d9534f;
             --info: #3498db;
+            --bg-review: #2dd4bf; /* สีเขียวมิ้นท์สำหรับรีวิวลูกค้า */
         }
         
         body, html {
@@ -23,19 +24,20 @@
             flex-direction: column;
         }
 
+        /* Header สีดำ Premium */
         .header {
             height: 12vh;
-            background: var(--white);
+            background: #111115;
             display: flex;
             align-items: center;
             justify-content: center;
             border-bottom: 5px solid var(--gold);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
             z-index: 100;
             position: relative;
         }
         .logo { height: 8vh; margin-right: 15px; }
-        .shop-name { font-size: 5.5vh; font-weight: 600; color: #1a1a1a; margin: 0; }
+        .shop-name { font-size: 5.5vh; font-weight: 600; color: #ffffff; margin: 0; }
         .shop-name span { color: var(--gold); }
 
         .header-right {
@@ -47,7 +49,8 @@
         }
 
         .info-badge {
-            background: var(--info);
+            background: rgba(52, 152, 219, 0.2);
+            border: 1px solid var(--info);
             color: white;
             padding: 5px 12px;
             border-radius: 8px;
@@ -60,22 +63,13 @@
         }
 
         .holiday-badge {
-            background: var(--danger);
+            background: rgba(217, 83, 79, 0.2);
+            border: 1px solid var(--danger);
             color: white;
             padding: 5px 15px;
             border-radius: 8px;
             font-size: 2vh;
             font-weight: 500;
-        }
-
-        #digital-clock {
-            color: #1a1a1a;
-            font-size: 3.5vh;
-            font-weight: 600;
-            background: #f0f0f0;
-            padding: 5px 20px;
-            border-radius: 12px;
-            border: 2px solid var(--gold);
         }
 
         #display-area {
@@ -102,8 +96,14 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.7);
         }
 
+        /* กรอบทองดารา VIP */
         .special-card {
             border: 3px solid var(--gold);
+        }
+
+        /* กรอบสีมิ้นท์รีวิวลูกค้า */
+        .review-card {
+            border: 3px solid var(--bg-review);
         }
 
         .thanks-overlay {
@@ -130,6 +130,13 @@
             color: var(--gold); 
             font-size: 5.8vh;
             text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        }
+
+        /* ไฮไลท์สำหรับหน้ารีวิวลูกค้า */
+        .thanks-text .client-highlight {
+            color: var(--bg-review);
+            font-size: 5.2vh;
+            text-shadow: 0 0 15px rgba(45, 212, 191, 0.4);
         }
 
         .badge {
@@ -199,6 +206,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 40px;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
         .footer-text { font-size: 2.8vh; }
@@ -227,7 +235,6 @@
                 <strong>11:00 - 20:00</strong>
             </div>
             <div class="holiday-badge">❌ หยุดทุกวันพุธ</div>
-            <div id="digital-clock">00:00:00</div>
         </div>
     </div>
 
@@ -235,7 +242,7 @@
 
     <div class="ticker-wrap">
         <div class="ticker-move">
-             ✨ วัตถุดิบสดใหม่ ใส่ใจทุกจาน ✨ <span style="color: #d00; font-weight: bold;">ร้านหยุดทุกวันพุธ</span> ✨ สำรองที่นั่งโทร 091-2398627 ✨ เมนูแนะนำวันนี้: กุ้งแม่น้ำคั่วพริกเกลือ, ไข่ตุ๋นทะเลหม้อไฟ, ปลากะพงทอดน้ำปลา ✨
+             🔥 วัตถุดิบสดใหม่คัดสรรจานต่อจาน <span>•</span> 📞 สำรองที่นั่งล่วงหน้าด่วน โทร 091-2398627 <span>•</span> 🔵 ติดตามส่วนลดพิเศษได้ที่ Facebook Page: ครัวเล็กเล็ก <span>•</span> ✨ ขอให้มีความสุขกับมื้ออาหารสุดพิเศษนะครับ ✨
         </div>
     </div>
 
@@ -245,19 +252,60 @@
     </div>
 
     <script>
+        // [1] รายการรูปเมนูอาหารทั้งหมด 49 รูป
         const menuImages = [
-            "https://img2.pic.in.th/518944471_1262665762536791_3034687933413591951_n.jpg",
-            "https://img1.pic.in.th/images/523122580_1267689408701093_2736552579555197975_n.jpg",
-            "https://img2.pic.in.th/539450511_1295918935878140_4887361505576851086_n.jpg",
-            "https://img1.pic.in.th/images/548195611_1313022794167754_2091179585666618733_n.jpg",
-            "https://img1.pic.in.th/images/557596134_1328892295914137_5448378800222139297_n.jpg",
-            "https://img2.pic.in.th/571126216_1352903190179714_3781199523474770985_n.jpg",
-            "https://img1.pic.in.th/images/572421432_1356367263166640_4447074837102631416_n.jpg",
-            "https://img2.pic.in.th/575123464_1359944166142283_9195548062733492126_n.jpg"
-            // เพิ่มรูปอาหารที่นี่จนครบ 34 อย่าง
+            "https://img1.pic.in.th/images/512764854_1242582094545158_733963271818714277_n261e78e994b39a6e.jpg",
+            "https://img1.pic.in.th/images/518185631_1260083192795048_6172761668095134701_n33dfd8b348ced7b2.jpg",
+            "https://img2.pic.in.th/518309924_1260132289456805_608003653411166558_n54faa95360929a0a.jpg",
+            "https://img2.pic.in.th/518944471_1262665762536791_3034687933413591951_n3dcc79f8ce653085.jpg",
+            "https://img2.pic.in.th/523122580_1267689408701093_2736552579555197975_n.jpg",
+            "https://img1.pic.in.th/images/539450511_1295918935878140_4887361505576851086_n.jpg",
+            "https://img1.pic.in.th/images/548195611_1313022794167754_2091179585666618733_n7fa609c1832ad01c.jpg",
+            "https://img2.pic.in.th/557596134_1328892295914137_5448378800222139297_n.jpg",
+            "https://img2.pic.in.th/571126216_1352903190179714_3781199523474770985_n50490b72f51b1242.jpg",
+            "https://img1.pic.in.th/images/572421432_1356367263166640_4447074837102631416_n1e5655ecb2dc67f7.jpg",
+            "https://img2.pic.in.th/575123464_1359944166142283_9195548062733492126_n3198ade68ec12f65.jpg",
+            "https://img2.pic.in.th/618558028_1424692493000783_4098435049126030434_n.jpg",
+            "https://img2.pic.in.th/490667917_1184488067021228_4100357186909034877_n.jpg",
+            "https://img1.pic.in.th/images/490692618_1184460263690675_3410704211435490440_n.jpg",
+            "https://img1.pic.in.th/images/490702587_1184737360329632_2751535877505422202_n.jpg",
+            "https://img1.pic.in.th/images/490747490_1186847226785312_1603732594548848287_n.jpg",
+            "https://img2.pic.in.th/490758164_1186844833452218_3318769589573310161_n.jpg",
+            "https://img2.pic.in.th/490918547_1186491923487509_1087929914873290518_n.jpg",
+            "https://img1.pic.in.th/images/490961964_1193384076131627_5088875184322408080_n.jpg",
+            "https://img1.pic.in.th/images/491836224_1186924080110960_863232275377436822_n.jpg",
+            "https://img2.pic.in.th/491843051_1186830400120328_3588404656102061215_n.jpg",
+            "https://img1.pic.in.th/images/491923455_1187118003424901_914732314357607314_n.jpg",
+            "https://img1.pic.in.th/images/491929111_1186841340119234_596625077055860373_n.jpg",
+            "https://img2.pic.in.th/491985715_1191973619606006_4187453192547239545_n.jpg",
+            "https://img2.pic.in.th/492002557_1191976396272395_1601722686402295387_n.jpg",
+            "https://img1.pic.in.th/images/492006849_1186844836785551_5418109630830401989_n.jpg",
+            "https://img2.pic.in.th/492057677_1191980999605268_4909398928559203316_n.jpg",
+            "https://img2.pic.in.th/492189825_1191973489606019_4582669452168849649_n.jpg",
+            "https://img2.pic.in.th/492267813_1193688482767853_3428235767694677331_n.jpg",
+            "https://img1.pic.in.th/images/492553749_1192802646189770_2476022335284586873_n3cf0016b42af475b.jpg",
+            "https://img1.pic.in.th/images/492871081_1194185402718161_606484793202864779_nefde1dc7f9f6e60c.jpg",
+            "https://img1.pic.in.th/images/492951640_1192802642856437_8404800208880529377_n5a39d233efaae2c5.jpg",
+            "https://img2.pic.in.th/492959990_1194881625981872_3821780889944264423_n.jpg",
+            "https://img1.pic.in.th/images/493081306_1196066705863364_7412902564098787742_n.jpg",
+            "https://img1.pic.in.th/images/493277022_1194761005993934_2220062179929120335_n1942bf1fd4f7dd37.jpg",
+            "https://img2.pic.in.th/493280374_1194355246034510_2047030344113212028_nfdbda0344d75caa3.jpg",
+            "https://img1.pic.in.th/images/493406026_1193688506101184_2404893083235625371_n.jpg",
+            "https://img1.pic.in.th/images/493466183_1193688559434512_4585701905244907709_n7742075f60183d4d.jpg",
+            "https://img2.pic.in.th/493496798_1197825232354178_4781643881207173391_n9203d82b024338cb.jpg",
+            "https://img2.pic.in.th/493692912_1193883759414992_814193229466503647_n915f247ab8171232.jpg",
+            "https://img1.pic.in.th/images/493732172_1196063695863665_4838571742287857703_n.jpg",
+            "https://img2.pic.in.th/493842664_1196068819196486_1199522514564538071_n7c94f928910be7aa.jpg",
+            "https://img2.pic.in.th/493971430_1196066592530042_1789774802995933780_n.jpg",
+            "https://img1.pic.in.th/images/493981049_1196063855863649_611724712342705934_n47f090682630cd98.jpg",
+            "https://img2.pic.in.th/494969401_1202807498522618_3305620649011382243_n.jpg",
+            "https://img2.pic.in.th/499539563_1216824160454285_7830991750968822856_n00cc164908dc2661.jpg",
+            "https://img2.pic.in.th/499793471_1214467967356571_1447191606504924972_n4b832d3d98ffcf90.jpg",
+            "https://img1.pic.in.th/images/504673845_1227819929354708_8207604477724626475_n.jpg",
+            "https://img1.pic.in.th/images/505393862_1230099285793439_2613277326110417675_n65bfe7bc8ccfb8fe.jpg"
         ];
 
-        // จัดกลุ่มรูปศิลปินเป็นชุดๆ
+        // [2] จัดกลุ่มรูปศิลปิน VIP
         const celebritySets = [
             {
                 images: ["https://img2.pic.in.th/620007072_1425761852893847_7638332805859317431_n.jpg"],
@@ -272,9 +320,62 @@
             }
         ];
 
+        // [3] โซนรีวิวจากลูกค้าทางบ้าน
+        const reviewSets = [
+            {
+                images: [
+                    "https://i.postimg.cc/8kxpHfVS/641380123-122173807466790977-2331992307828066068-n.jpg",
+                    "https://i.postimg.cc/qvTkffRJ/Screenshot-2026-05-18-220332.png"
+                ], 
+                text: '🗣️ รีวิวจากคุณลูกค้า: <span class="client-highlight">"ทางร้าน “ครัวเล็กเล็ก” ขอขอบคุณ 🙏🏻💖คุณมาวินและเชฟบุช และทีมงานรายการ “เที่ยวฟินกินฉ่ำ”ติดตามได้ทางไทยรัฐทีวี ช่อง 32"</span> ⭐⭐⭐⭐⭐'
+            },
+            {
+                images: ["https://i.postimg.cc/s2JPPRBb/message-Image-1779117804501.jpg"],
+                text: '🗣️ รีวิวจากคุณลูกค้า: <span class="client-highlight">"ทางร้าน “ครัวเล็กเล็ก” ขอขอบคุณ 🙏🏻💖รายการ “มิตรแท้ชวนชิม” ติดตามได้ทาง เพจ Facebook มิตรแท้ชวนชิม เเละ TikTok มิตรแท้ชวนชิม "</span> ⭐⭐⭐⭐⭐'
+            },
+            {
+                images: [
+                    "https://i.postimg.cc/jd7RDx93/message-Image-1779118564898-0.jpg",
+                    "https://i.postimg.cc/MKQzn64r/message-Image-1779118613849-0.jpg"
+                ], 
+                text: '🗣️ รีวิวจากคุณลูกค้า: <span class="client-highlight">"ทางร้าน “ครัวเล็กเล็ก” ขอขอบคุณค้าบ 🙏🏻💖 "</span> ⭐⭐⭐⭐⭐'
+            },
+            {
+                images: [
+                    "https://i.postimg.cc/dtyJhsXH/message-Image-1779118627399-0.jpg",
+                    "https://i.postimg.cc/VLCzJfTV/message-Image-1779118637332-0.jpg"
+                ], 
+                text: '🗣️ รีวิวจากคุณลูกค้า: <span class="client-highlight">"ทางร้าน “ครัวเล็กเล็ก” ขอขอบคุณค้าบ 🙏🏻💖 "</span> ⭐⭐⭐⭐⭐'
+            },
+            {
+                images: [
+                    "https://i.postimg.cc/wTm91qPn/message-Image-1779118650913-0.jpg",
+                    "https://i.postimg.cc/pXFPmW7w/message-Image-1779118659044-0.jpg"
+                ], 
+                text: '🗣️ รีวิวจากคุณลูกค้า: <span class="client-highlight">"ทางร้าน “ครัวเล็กเล็ก” ขอขอบคุณค้าบ 🙏🏻💖 "</span> ⭐⭐⭐⭐⭐'
+            },
+            {
+                images: [
+                    "https://i.postimg.cc/bNtqZyWy/message-Image-1779118667715-0.jpg",
+                    "https://i.postimg.cc/8P6T7p3m/message-Image-1779118674803-0.jpg"
+                ], 
+                text: '🗣️ รีวิวจากคุณลูกค้า: <span class="client-highlight">"ทางร้าน “ครัวเล็กเล็ก” ขอขอบคุณค้าบ 🙏🏻💖 "</span> ⭐⭐⭐⭐⭐'
+            },
+            {
+                images: [
+                    "https://i.postimg.cc/X7CnrjmS/message-Image-1779118681571-0.jpg",
+                    "https://i.postimg.cc/zXgqyz6Y/message-Image-1779118759698.jpg"
+                ], 
+                text: '🗣️ รีวิวจากคุณลูกค้า: <span class="client-highlight">"ทางร้าน “ครัวเล็กเล็ก” ขอขอบคุณค้าบ 🙏🏻💖 "</span> ⭐⭐⭐⭐⭐'
+            }
+        ];
+
         let menuIdx = 0;
         let celebIdx = 0;
-        let isShowCeleb = true; 
+        let reviewIdx = 0;
+        
+        // บังคับสเต็ปเริ่มต้นที่ดารา: 'celeb' -> 'food' -> 'review'
+        let currentMode = 'celeb'; 
         let timeoutHandle;
         const badges = ["เมนูแนะนำ ✨", "ต้องลอง! 🔥", "ขายดีที่สุด 👍", "อร่อยคอนเฟิร์ม! ❤️"];
 
@@ -283,10 +384,10 @@
             area.innerHTML = '';
             let displayTime = 10000;
 
-            if (isShowCeleb) {
-                // แสดงรูปศิลปินทีละชุด
+            if (currentMode === 'celeb') {
+                // ================= [ช่วงที่ 1] แสดงรูปดารา VIP =================
                 const currentCeleb = celebritySets[celebIdx];
-                displayTime = 15000;
+                displayTime = 15000; // หน้าดาราค้าง 15 วินาที
 
                 currentCeleb.images.forEach(src => {
                     const card = document.createElement('div');
@@ -304,14 +405,46 @@
                 area.appendChild(overlay);
 
                 celebIdx++;
-                // ถ้าแสดงศิลปินครบทุกชุดแล้ว ต่อไปให้โชว์อาหาร
+                
+                // [แก้ไข] เมื่อเล่นเซ็ตดาราจนครบทั้งหมดที่มีใน Array (ครบ 2 เซ็ต) ค่อยให้ข้ามไปเปิดหน้าเมนูอาหารปกติ
                 if (celebIdx >= celebritySets.length) {
-                    celebIdx = 0;
-                    isShowCeleb = false;
+                    celebIdx = 0; // รีเซ็ตตัวนับดารากลับมารอเปิดรอบใหญ่ถัดไป
+                    currentMode = 'food'; // เปลี่ยนสถานะไปเล่นเมนูอาหารต่อ
                 }
+
+            } else if (currentMode === 'review') {
+                // ================= [ช่วงที่ 3] แสดงรีวิวลูกค้าทั่วไป =================
+                const currentReview = reviewSets[reviewIdx];
+                displayTime = 15000; // หน้ารีวิวค้าง 15 วินาที
+
+                currentReview.images.forEach(src => {
+                    const card = document.createElement('div');
+                    card.className = 'menu-card review-card fade-in';
+                    const img = document.createElement('img');
+                    img.className = 'menu-img';
+                    img.src = src;
+                    card.appendChild(img);
+                    area.appendChild(card);
+                });
+
+                const overlay = document.createElement('div');
+                overlay.className = 'thanks-overlay';
+                overlay.innerHTML = `<div class="thanks-text">${currentReview.text}</div>`;
+                area.appendChild(overlay);
+
+                reviewIdx++;
+                
+                // เมื่อแสดงผลรีวิวเซ็ตปัจจุบันจนครบทุกชุดที่มีใน List (ครบทั้ง 7 รีวิว) แล้ว 
+                // ถึงจะทำการเปลี่ยนโหมดสลับวนกลับไปขึ้นรูปดารา VIP เพื่อเริ่มลูปใหม่ตามลำดับ
+                if (reviewIdx >= reviewSets.length) {
+                    reviewIdx = 0; // รีเซ็ตตัวนับรีวิวกลับไปเริ่มชุดแรก
+                    currentMode = 'celeb'; // เปลี่ยนโหมดไปที่ดารา
+                }
+
             } else {
-                // แสดงรูปอาหารทีละ 2 รูป
-                displayTime = 10000;
+                // ================= [ช่วงที่ 2] แสดงรูปเมนูอาหารปกติ (ทีละ 2 รูป) =================
+                displayTime = 10000; // หน้าเมนูอาหารค้าง 10 วินาที
+                
                 for (let i = 0; i < 2; i++) {
                     if (menuIdx < menuImages.length) {
                         const card = document.createElement('div');
@@ -333,10 +466,10 @@
                     }
                 }
 
-                // ถ้าโชว์รูปอาหารครบ 34 อย่างแล้ว ให้กลับไปโชว์ศิลปินใหม่
+                // เมื่อเปิดวนจนครบเมนูสุดท้าย (ครบ 49 รูป) ➔ บังคับตัดเข้าหน้ารีวิวลูกค้าต่อทันที
                 if (menuIdx >= menuImages.length) {
-                    menuIdx = 0;
-                    isShowCeleb = true;
+                    menuIdx = 0; // รีเซ็ตตัวนับเพื่อรอบถัดไป
+                    currentMode = 'review';
                 }
             }
 
@@ -344,15 +477,8 @@
             timeoutHandle = setTimeout(updateDisplay, displayTime);
         }
 
-        function updateClock() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('th-TH', { hour12: false });
-            document.getElementById('digital-clock').innerText = timeStr;
-        }
-
+        // เริ่มต้นรันระบบ
         updateDisplay();
-        setInterval(updateClock, 1000);
-        updateClock();
     </script>
 </body>
 </html>
